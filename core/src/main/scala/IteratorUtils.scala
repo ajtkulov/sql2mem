@@ -86,6 +86,18 @@ object IteratorUtils {
         }
       }
     }
+
+    def splitByIter(splitWhen: A => Boolean): Iterator[Iterator[A]] = {
+        new Iterator[Iterator[A]] {
+          def hasNext = iterator.hasNext
+
+          def next: Iterator[A] = {
+            val cur = iterator.takeWhile(!splitWhen(_))
+            cur
+          }
+        }.withFilter(l => l.nonEmpty)
+    }
+
   }
 
 }

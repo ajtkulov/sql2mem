@@ -41,6 +41,10 @@ final case class Delimiter() extends Command
   */
 final case class Empty() extends Command
 
+final case class SetExpr() extends Command
+
+final case class AlterTable() extends Command
+
 /**
   * Column definition
   *
@@ -148,4 +152,8 @@ case class Values(values: List[Value])
   */
 case class InsertValues(table: String, values: List[Values]) extends Command {
   val tableNameTrimmed = table.filterNot(_ == '`')
+}
+
+case class TableName(schema: String, name: String) {
+  def fullName: String = s"$schema.$name"
 }
